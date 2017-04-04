@@ -1,5 +1,6 @@
 # altdemo-vagrant
 Vagrant topology for ALT Linux build for Mellanox Spectrum Switch and RHEL/CentOS servers.
+Based on https://github.com/CumulusNetworks/cldemo-vagrant.
 ## Overview
 VMs:
 * **oob-mgmt-server** - management VM
