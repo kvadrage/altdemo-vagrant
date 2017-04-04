@@ -1,4 +1,4 @@
-- name: create cumulus user. Passwd is CumulusLinux!
+- name: create admin user. Passwd is admin
   user: name="{{wbench_user}}"
         password="{{wbench_passwd}}"
         update_password=on_create
@@ -26,5 +26,5 @@
 - name: Clear hosts file
   copy: src=known_hosts dest=/home/{{wbench_user}}/.ssh/known_hosts mode=0600
 
-- name: chown cumulus ssh to cumulus
-  file: path=/home/cumulus/.ssh recurse=yes owner=cumulus
+- name: chown admin ssh to admin
+  file: path=/home/admin/.ssh recurse=yes owner=admin

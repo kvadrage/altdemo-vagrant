@@ -22,7 +22,7 @@ echo "iface eth1 inet static" >> /etc/network/interfaces
 echo "    address 10.35.81.200" >> /etc/network/interfaces
 echo "    netmask 255.255.254.0" >> /etc/network/interfaces
 
-echo "cumulus ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/10_admin
+echo "admin ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/10_admin
 
 # replace ssh_config to disable known_hosts checking
 cat <<EOF > /etc/ssh/ssh_config

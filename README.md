@@ -1,5 +1,5 @@
 # altdemo-vagrant
-
+Vagrant topology for ALT Linux build for Mellanox Spectrum Switch and RHEL/CentOS servers.
 ## Overview
 VMs:
 * **oob-mgmt-server** - management VM
@@ -7,6 +7,11 @@ VMs:
 * **leaf01-04** - leaf switches (ALT)
 * **spine01-02** - spine switches (ALT)
 * **server01-02** - servers (CentOS)
+
+Host HW requirements:
+* CPU: 2-4 cores/vCPU
+* RAM: 8Gb minimal, 16Gb recommended
+* Disk: 25Gb
 
 ## Network topology
 ToDo

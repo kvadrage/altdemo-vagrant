@@ -77,8 +77,8 @@ end
       config.vm.provision "file", source: "./oob-provision", destination: "~/oob-provision"
       device.vm.provision :shell , inline: "ansible-playbook oob-provision/site.yml --extra-vars '#{extravars.to_json}'  --connection=local -i localhost,"
 
-      # Copy altdemo-provision playbook
-      config.vm.provision "file", source: "./altdemo-provision", destination: "~/altdemo-provision"
+      # Clone altdemo-provision playbook
+      device.vm.provision :shell , inline: "git clone https://github.com/kvadrage/altdemo-provision.git"
 
       # Apply the interface re-map
       device.vm.provision "file", source: "./helper_scripts/apply_udev.py", destination: "/home/vagrant/apply_udev.py"
