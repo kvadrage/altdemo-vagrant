@@ -7,8 +7,11 @@ echo "  Running Server Post Config"
 echo "#################################"
 sudo su -
 
+# Shorten Boot Process - Applies to Ubuntu Only - remove \"Wait for Network\"
+sed -i 's/sleep [0-9]*/sleep 1/' /etc/init/failsafe.conf || true
+
 echo "  Adding admin user"
-useradd -G wheel -s /bin/bash admin
+useradd -G sudo -s /bin/bash admin
 
 sed "s/PasswordAuthentication no/PasswordAuthentication yes/" -i /etc/ssh/sshd_config
 sed "s/#PermitRootLogin/PermitRootLogin/" -i /etc/ssh/sshd_config
@@ -25,20 +28,32 @@ chmod 700 -R /home/admin/.ssh
 chmod 700 -R /root/.ssh
 chown admin:admin -R /home/admin/.ssh
 
-systemctl disable NetworkManager.service
-systemctl stop NetworkManager.service
-systemctl disable firewalld.service
-systemctl stop firewalld.service
+cat << EOF > /etc/network/interfaces
+source /etc/network/interfaces.d/*
 
-rm -f /etc/sysconfig/network-scripts/ifcfg-eth0
-echo 'DEVICE="eth0" BOOTPROTO="dhcp" ONBOOT="yes" TYPE="Ethernet" PERSISTENT_DHCLIENT="yes"' > /etc/sysconfig/network-scripts/ifcfg-eth0
-echo 'DEVICE="vagrant" BOOTPROTO="dhcp" ONBOOT="yes" TYPE="Ethernet" PERSISTENT_DHCLIENT="yes"' > /etc/sysconfig/network-scripts/ifcfg-vagrant
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interface
+auto vagrant
+iface vagrant inet dhcp
+
+# internal mgmt
+auto eth0
+iface eth0 inet dhcp
+
+EOF
 
 # Other stuff
-yum update
-yum -y install lldpad
-yum -y install quagga
+apt-get update
+apt-get install lldpd iperf iperf3 tcpdump -y
+apt-get install -y software-properties-common python-software-properties
+add-apt-repository -y ppa:cz.nic-labs/bird
+apt-get update
+apt-get install bird -y
 
+systemctl enable lldpd
 
 echo "#################################"
 echo "   Finished"

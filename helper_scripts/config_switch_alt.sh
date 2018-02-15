@@ -10,17 +10,42 @@ sudo su
 echo "  Adding admin user"
 useradd -G wheel -s /bin/bash admin
 
+echo "  Configuring hostname"
+test -n "$1" && sed -i "s/HOSTNAME=.*$/HOSTNAME=$1/g" /etc/sysconfig/network
+
 echo "  Configuring interfaces"
-mkdir -p /etc/net/ifaces/vagrant
-cat <<EOF > /etc/net/ifaces/vagrant/options
-BOOTPROTO=dhcp
-TYPE=eth
-CONFIG_WIRELESS=no
-EOF
-cat <<EOF > /etc/net/ifaces/eth0/options
-BOOTPROTO=dhcp
-TYPE=eth
-CONFIG_WIRELESS=no
+cat <<EOF > /etc/rc.d/rc.netinit
+# bring up the loopback device and let the kernel to autoconfigure it
+ip link set dev lo up
+
+# Try to get address automatically
+ip link set dev eth0 down
+ip link set dev eth0 name vagrant up
+dhcpcd -p -w vagrant && dhcpcd -x vagrant
+
+# Configure the netfilter subsystem (kernel firewall)
+test -x /etc/rc.d/rc.firewall \
+&& /etc/rc.d/rc.firewall
+
+# sysctl tweaks
+## Turn on IP packet forwarding
+echo 1 > /proc/sys/net/ipv4/ip_forward
+echo 1 > /proc/sys/net/ipv6/conf/all/forwarding
+## enable 5-tuple hashing for ECMP
+echo 1 > /proc/sys/net/ipv4/fib_multipath_hash_policy
+
+## enable linkdown and addr down
+echo 1 > /proc/sys/net/ipv6/conf/all/keep_addr_on_down
+echo 1 > /proc/sys/net/ipv4/conf/default/ignore_routes_with_linkdown
+
+## enable services binding to VRFs
+echo 1 > /proc/sys/net/ipv4/tcp_l3mdev_accept
+echo 1 > /proc/sys/net/ipv4/udp_l3mdev_accept
+
+# tune TCP in kernel
+echo 0 > /proc/sys/net/ipv4/tcp_syncookies
+echo 4096 > /proc/sys/net/core/somaxconn
+
 EOF
 
 ## Convenience code. This is normally done in ZTP.
