@@ -99,7 +99,7 @@ end
   config.vm.define "leaf01" do |device|
     # device.vm.hostname = "leaf01"
     $hostname = "leaf01"
-    device.vm.box = "alt_netdev"
+    device.vm.box = "kvadrage/alt_netdev"
     config.vbguest.auto_update = false
 
     device.vm.provider "virtualbox" do |v|
@@ -166,7 +166,7 @@ TEXT
   config.vm.define "leaf02" do |device|
     # device.vm.hostname = "leaf02"
     $hostname = "leaf02"
-    device.vm.box = "alt_netdev"
+    device.vm.box = "kvadrage/alt_netdev"
     config.vbguest.auto_update = false
 
     device.vm.provider "virtualbox" do |v|
@@ -233,7 +233,7 @@ TEXT
   config.vm.define "leaf03" do |device|
     # device.vm.hostname = "leaf03"
     $hostname = "leaf03"
-    device.vm.box = "alt_netdev"
+    device.vm.box = "kvadrage/alt_netdev"
     config.vbguest.auto_update = false
 
     device.vm.provider "virtualbox" do |v|
@@ -301,7 +301,7 @@ TEXT
   config.vm.define "leaf04" do |device|
     # device.vm.hostname = "leaf04"
     $hostname = "leaf04"
-    device.vm.box = "alt_netdev"
+    device.vm.box = "kvadrage/alt_netdev"
     config.vbguest.auto_update = false
 
     device.vm.provider "virtualbox" do |v|
@@ -368,7 +368,7 @@ TEXT
   ##### DEFINE VM for spine01 #####
   config.vm.define "spine01" do |device|
     # device.vm.hostname = "spine01"
-    device.vm.box = "alt_netdev"
+    device.vm.box = "kvadrage/alt_netdev"
     config.vbguest.auto_update = false
 
     device.vm.provider "virtualbox" do |v|
@@ -436,7 +436,7 @@ TEXT
 ##### DEFINE VM for spine02 #####
 config.vm.define "spine02" do |device|
   # device.vm.hostname = "spine02"
-  device.vm.box = "alt_netdev"
+  device.vm.box = "kvadrage/alt_netdev"
   config.vbguest.auto_update = false
 
   device.vm.provider "virtualbox" do |v|
@@ -504,7 +504,7 @@ end
 ##### DEFINE VM for spine03 #####
 config.vm.define "spine03" do |device|
   # device.vm.hostname = "spine03"
-  device.vm.box = "alt_netdev"
+  device.vm.box = "kvadrage/alt_netdev"
   config.vbguest.auto_update = false
 
   device.vm.provider "virtualbox" do |v|
@@ -571,7 +571,7 @@ end
 ##### DEFINE VM for spine04 #####
 config.vm.define "spine04" do |device|
   # device.vm.hostname = "spine04"
-  device.vm.box = "alt_netdev"
+  device.vm.box = "kvadrage/alt_netdev"
   config.vbguest.auto_update = false
 
   device.vm.provider "virtualbox" do |v|
@@ -638,7 +638,7 @@ end
   ##### DEFINE VM for server01 #####
   config.vm.define "server01" do |device|
     device.vm.hostname = "server01"
-    device.vm.box = "minimal/xenial64"
+    device.vm.box = "centos/7"
 
 
     device.vm.provider "virtualbox" do |v|
@@ -667,7 +667,7 @@ end
   end
 
       # Run Any Extra Config
-      device.vm.provision :shell , path: "./helper_scripts/config_server_ubuntu.sh"
+      device.vm.provision :shell , path: "./helper_scripts/config_server_centos.sh"
 
       # Apply the interface re-map
       device.vm.provision "file", source: "./helper_scripts/apply_udev.py", destination: "/home/vagrant/apply_udev.py"
@@ -685,7 +685,7 @@ end
   ##### DEFINE VM for server02 #####
   config.vm.define "server02" do |device|
     device.vm.hostname = "server02"
-    device.vm.box = "minimal/xenial64"
+    device.vm.box = "centos/7"
 
 
     device.vm.provider "virtualbox" do |v|
@@ -714,7 +714,7 @@ end
   end
 
       # Run Any Extra Config
-      device.vm.provision :shell , path: "./helper_scripts/config_server_ubuntu.sh"
+      device.vm.provision :shell , path: "./helper_scripts/config_server_centos.sh"
 
       # Apply the interface re-map
       device.vm.provision "file", source: "./helper_scripts/apply_udev.py", destination: "/home/vagrant/apply_udev.py"
@@ -732,7 +732,7 @@ end
   ##### DEFINE VM for server03 #####
   config.vm.define "server03" do |device|
     device.vm.hostname = "server03"
-    device.vm.box = "minimal/xenial64"
+    device.vm.box = "centos/7"
 
 
     device.vm.provider "virtualbox" do |v|
@@ -761,7 +761,7 @@ end
   end
 
       # Run Any Extra Config
-      device.vm.provision :shell , path: "./helper_scripts/config_server_ubuntu.sh"
+      device.vm.provision :shell , path: "./helper_scripts/config_server_centos.sh"
 
       # Apply the interface re-map
       device.vm.provision "file", source: "./helper_scripts/apply_udev.py", destination: "/home/vagrant/apply_udev.py"
@@ -779,7 +779,7 @@ end
   ##### DEFINE VM for server04 #####
   config.vm.define "server04" do |device|
     device.vm.hostname = "server04"
-    device.vm.box = "minimal/xenial64"
+    device.vm.box = "centos/7"
 
 
     device.vm.provider "virtualbox" do |v|
@@ -808,7 +808,7 @@ end
   end
 
       # Run Any Extra Config
-      device.vm.provision :shell , path: "./helper_scripts/config_server_ubuntu.sh"
+      device.vm.provision :shell , path: "./helper_scripts/config_server_centos.sh"
 
       # Apply the interface re-map
       device.vm.provision "file", source: "./helper_scripts/apply_udev.py", destination: "/home/vagrant/apply_udev.py"
